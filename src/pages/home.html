@@ -1,12 +1,183 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home Page</title>
+<title>HOME</title>
+
+<style>
+    body {
+        margin: 0;
+        background: black;
+        color: #aa0000;
+        font-family: "Courier New", monospace;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+    }
+
+    /* Background breathing effect */
+    body::after {
+        content: "";
+        position: fixed;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(120,0,0,0.15) 0%, transparent 70%);
+        animation: breathe 6s infinite ease-in-out;
+        pointer-events: none;
+    }
+
+    @keyframes breathe {
+        0%,100% { transform: scale(1); opacity: 0.6; }
+        50% { transform: scale(1.1); opacity: 1; }
+    }
+
+    .container {
+        text-align: center;
+        z-index: 2;
+    }
+
+    h1 {
+        letter-spacing: 10px;
+        font-weight: normal;
+        animation: flicker 2s infinite;
+    }
+
+    @keyframes flicker {
+        0% { opacity: 1; }
+        45% { opacity: 0.8; }
+        50% { opacity: 0.4; }
+        55% { opacity: 0.9; }
+        100% { opacity: 1; }
+    }
+
+    #startBtn {
+        margin-top: 40px;
+        padding: 20px 60px;
+        font-size: 22px;
+        background: transparent;
+        border: 2px solid darkred;
+        color: red;
+        cursor: pointer;
+        transition: 0.3s;
+        letter-spacing: 5px;
+    }
+
+    #startBtn:hover {
+        background: red;
+        color: black;
+        box-shadow: 0 0 20px red;
+    }
+
+    #whisper {
+        position: absolute;
+        bottom: 20px;
+        width: 100%;
+        text-align: center;
+        font-size: 14px;
+        opacity: 0.6;
+        letter-spacing: 2px;
+    }
+
+    .glitch {
+        animation: glitch 0.3s infinite;
+    }
+
+    @keyframes glitch {
+        0% { transform: translate(1px, -1px); }
+        25% { transform: translate(-1px, 1px); }
+        50% { transform: translate(1px, 1px); }
+        75% { transform: translate(-1px, -1px); }
+        100% { transform: translate(0, 0); }
+    }
+
+</style>
 </head>
 <body>
-    <h1>Home Page</h1>
-    <p>This is the home page of the website.</p>
+
+<div class="container">
+    <h1>HOME</h1>
+    <button id="startBtn">START</button>
+</div>
+
+<div id="whisper"></div>
+
+<script>
+    const normalWhispers = [
+        "You’ve been here before.",
+        "It remembers you.",
+        "You never make it past this point.",
+        "Why do you keep coming back?",
+        "This is where it resets.",
+        "Press it. You always do."
+    ];
+
+    const rareWhispers = [
+        "STOP LOOKING AT THE SCREEN.",
+        "IT CAN SEE YOU NOW.",
+        "DON’T TURN AROUND.",
+        "YOU WERE NOT ALONE WHEN YOU OPENED THIS.",
+        "IT KNOWS YOUR NAME.",
+        "THIS TIME IT DOESN’T RESET."
+    ];
+
+    const whisperElement = document.getElementById("whisper");
+    const startBtn = document.getElementById("startBtn");
+
+    let isRareActive = false;
+
+    function randomWhisper() {
+        isRareActive = Math.random() < 0.5; // 50/50 chance
+
+        if (isRareActive) {
+            const randomIndex = Math.floor(Math.random() * rareWhispers.length);
+            whisperElement.textContent = rareWhispers[randomIndex];
+
+            whisperElement.style.color = "white";
+            whisperElement.style.textShadow = "0 0 20px red";
+            document.body.style.background = "#150000";
+
+        } else {
+            const randomIndex = Math.floor(Math.random() * normalWhispers.length);
+            whisperElement.textContent = normalWhispers[randomIndex];
+
+            whisperElement.style.color = "#aa0000";
+            whisperElement.style.textShadow = "none";
+            document.body.style.background = "black";
+        }
+    }
+
+    randomWhisper();
+    setInterval(randomWhisper, 5000);
+
+    startBtn.addEventListener("click", () => {
+
+        if (isRareActive) {
+            // RARE MESSAGE ACTIVE → RESET EVERYTHING
+            startBtn.textContent = "NO.";
+            startBtn.classList.add("glitch");
+
+            setTimeout(() => {
+                startBtn.textContent = "START";
+                startBtn.classList.remove("glitch");
+                whisperElement.textContent = "You’ve been here before.";
+                whisperElement.style.color = "#aa0000";
+                document.body.style.background = "black";
+                isRareActive = false;
+            }, 2000);
+
+        } else {
+            // NORMAL MESSAGE → CONTINUE
+            startBtn.textContent = "OPENING...";
+            document.body.style.background = "#200000";
+
+            setTimeout(() => {
+                window.location.href = "next.html";
+            }, 2000);
+        }
+
+    });
+</script>
+
 </body>
 </html>

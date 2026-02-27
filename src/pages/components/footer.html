@@ -1,0 +1,69 @@
+<footer class="creepy-footer">
+    <div id="creepy-text"></div>
+  </footer>
+  <style>
+    body {
+      margin: 0;
+      background: black;
+      font-family: "Courier New", monospace;
+    }
+  
+    .creepy-footer {
+      background: #050505;
+      color: #ff2c2c;
+      text-align: center;
+      padding: 25px;
+      font-size: 18px;
+      letter-spacing: 2px;
+      border-top: 1px solid #300;
+      text-shadow: 0 0 5px red, 0 0 10px darkred;
+      position: relative;
+    }
+  
+    #creepy-text {
+      animation: flicker 2s infinite;
+      transition: opacity 0.5s ease-in-out;
+    }
+  
+    @keyframes flicker {
+      0% { opacity: 1; }
+      45% { opacity: 0.8; }
+      50% { opacity: 0.4; }
+      55% { opacity: 0.9; }
+      100% { opacity: 1; }
+    }
+  </style>
+  <script>
+    const creepySentences = [
+      "I know you're still here.",
+      "Don't look behind you.",
+      "The shadows are breathing again.",
+      "Your FBI agent says hello.",
+      "Did you hear that?",
+      "The website is watching you.",
+      "You left the lights on downstairs.",
+      "That wasn't your cat.",
+      "We’ve been trying to reach you…",
+      "Smile. It’s already too late.",
+      "The basement misses you.",
+      "You blinked. We moved.",
+      "There’s something in your walls.",
+      "You were not alone when you clicked this."
+    ];
+  
+    const textElement = document.getElementById("creepy-text");
+  
+    function showRandomSentence() {
+      const randomIndex = Math.floor(Math.random() * creepySentences.length);
+      textElement.style.opacity = 0;
+  
+      setTimeout(() => {
+        textElement.textContent = creepySentences[randomIndex];
+        textElement.style.opacity = 1;
+      }, 500);
+    }
+  
+    showRandomSentence();
+  
+    setInterval(showRandomSentence, 5000);
+  </script>
