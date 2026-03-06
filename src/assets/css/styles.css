@@ -1,0 +1,21 @@
+body {
+    background-color: white;
+    color: black;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* Dark mode styles */
+body.dark-mode {
+    background-color: black;
+    color: white;
+}
+
+.change-LD-mode {
+    background: transparent; /* Removes background */
+    border: none;            /* Removes border */
+    outline: none;           /* Removes focus outline */
+    font-size: 40px;         
+    cursor: pointer;    
+    padding: 10px;   
+    text-align: right;    
+}
